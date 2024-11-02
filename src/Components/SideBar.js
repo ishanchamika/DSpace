@@ -3,6 +3,7 @@ import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 
 import StudentRequests from './Request';
+import downloadImage from '../assets/download.png';
 
 import { extendTheme, styled } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -13,8 +14,7 @@ import LayersIcon from '@mui/icons-material/Layers';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { PageContainer } from '@toolpad/core/PageContainer';
-import { DataGrid } from '@mui/x-data-grid';
-import Paper from '@mui/material/Paper'
+
 
 
 const NAVIGATION = [
@@ -32,22 +32,20 @@ const NAVIGATION = [
     segment: 'orders',
     title: 'Requests',
     icon: <ShoppingCartIcon />,
-    children: 
-    [
+    children: [
       {
         segment: 'sales',
-        title: 'Student Request',
-        icon: <Link to="/student-request"><DescriptionIcon /></Link>,
+        title: (<Link to="/student-request" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}><DescriptionIcon style={{ marginRight: 18 }} />Student Request </Link>),
       },
       {
         segment: 'traffic',
-        title: 'Teacher Requests',
-        icon: (<Link to="/"><DescriptionIcon /></Link>),
+        title: (<Link to="/teacher-requests" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}><DescriptionIcon style={{ marginRight: 18 }} />Teacher Requests</Link>),
       },
       {
         segment: 'lms_library',
-        title: 'Open Requests For Library',
-        icon: (<Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}><DescriptionIcon /></Link>),
+        title: (
+          <Link to="/library-requests" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}> <DescriptionIcon style={{ marginRight: 20 }} /> Open Requests For Library </Link>
+        ),
       },
     ],
   },
@@ -124,6 +122,29 @@ const Skeleton = styled('div')(({ theme, height }) =>
 
 export default function DashboardLayoutBasic(props) 
 {
+    useEffect(() => 
+    {
+        const titleElement = document.querySelector('.MuiTypography-root.MuiTypography-h6.css-1je49cu-MuiTypography-root');
+        if (titleElement) 
+        {
+          titleElement.textContent = 'Vajiraramaya'; // Replace "Vajiraramaya" with your desired text
+          titleElement.style.color = 'orange';
+        }
+
+        const imageContainer = document.querySelector('.css-yzjoij');
+        if (imageContainer) {
+        // Clear existing SVG content
+        imageContainer.innerHTML = '';
+
+        const newImage = document.createElement('img');
+        newImage.src = downloadImage; // Use imported path if it's within src
+        newImage.width = 40;
+        newImage.height = 40;
+        // Append the new image to the container
+        imageContainer.appendChild(newImage);
+        }
+      }, []);
+
   
   const { window } = props;
   const router = useDemoRouter('/');
